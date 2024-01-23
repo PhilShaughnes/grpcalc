@@ -6,7 +6,13 @@ option go_package = "./pb";
 
 service Calculator {
   rpc Add(CalculationRequest) returns (CalculationResponse);
+  rpc Divide(CalculationRequest) returns (CalculationResponse);
+  rpc Sum(NumbersRequest) returns (CalculationResponse);
 
+}
+
+message NumbersRequest {
+  repeated int64 numbers = 1;
 }
 
 message CalculationRequest {
