@@ -11,6 +11,8 @@ import (
 	"github.com/PhilShaughnes/grpcalc/pb"
 )
 
+const port = ":8080"
+
 type server struct {
 	pb.UnimplementedCalculatorServer
 }
@@ -25,7 +27,7 @@ func (s *server) Add(
 }
 
 func main() {
-	listener, err := net.Listen("tcp", ":8080")
+	listener, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalln("failed to create listener:", err)
 	}
@@ -34,6 +36,7 @@ func main() {
 	reflection.Register(s)
 
 	pb.RegisterCalculatorServer(s, &server{})
+	log.Printf("listening on: %v", port)
 	if err := s.Serve(listener); err != nil {
 		log.Fatalln("failed to serve:", err)
 	}

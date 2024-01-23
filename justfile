@@ -1,6 +1,11 @@
 # https://cheatography.com/linux-china/cheat-sheets/justfile/
 
+set dotenv-load
+
 cov := `mktemp`
+
+default:
+	@just --list
 
 # using this: https://grpc.io/docs/languages/go/quickstart/
 
@@ -8,6 +13,14 @@ cov := `mktemp`
 _pexport:
 	export PATH="$PATH:$(go env GOBIN)"
 	# export PATH="$PATH:$(go env GOPATH)/bin"
+
+# rerun go server when any go file changes
+watch:
+	ls **/*.go | entr -rc go run ./...
+
+# run grpcui - assumes app is running
+ui:
+	grpcui --plaintext localhost:8080
 
 # generate proto grpc and serialization code
 pgen PROTOFILE: _pexport
