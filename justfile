@@ -14,9 +14,13 @@ _pexport:
 	export PATH="$PATH:$(go env GOBIN)"
 	# export PATH="$PATH:$(go env GOPATH)/bin"
 
-# rerun go server when any go file changes
-watch:
-	ls **/*.go | entr -rc go run ./...
+# rerun go server when relevant go file changes
+serve:
+	ls server/*.go pb/*.go | entr -rc go run ./server
+
+# rerun go grpc client when go files changes
+client:
+	ls client/*.go pb/*.go | entr -rc go run ./client
 
 # run grpcui - assumes app is running
 ui:

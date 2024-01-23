@@ -23,6 +23,7 @@ func (s *server) Add(
 	ctx context.Context,
 	in *pb.CalculationRequest,
 ) (*pb.CalculationResponse, error) {
+	log.Printf("Got Add request: {a:%v, b:%v}", in.A, in.B)
 	return &pb.CalculationResponse{
 		Result: in.A + in.B,
 	}, nil
@@ -32,6 +33,7 @@ func (s *server) Divide(
 	ctx context.Context,
 	in *pb.CalculationRequest,
 ) (*pb.CalculationResponse, error) {
+	log.Printf("Got Divide request: {a:%v, b:%v}", in.A, in.B)
 	if in.B == 0 {
 		return nil, status.Error(codes.InvalidArgument, "Cannot divide by zero")
 	}
@@ -46,6 +48,7 @@ func (s *server) Sum(
 	in *pb.NumbersRequest,
 ) (*pb.CalculationResponse, error) {
 	var sum int64
+	log.Printf("Got Sum request: {Numbers:%v}", in.Numbers)
 
 	for _, num := range in.Numbers {
 		sum += num
